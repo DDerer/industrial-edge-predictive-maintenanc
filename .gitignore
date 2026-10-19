@@ -1,0 +1,4 @@
+/build/
+*.db
+*.log
+__pycache__/
