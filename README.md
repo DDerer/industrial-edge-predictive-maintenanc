@@ -127,11 +127,11 @@ CRC参数：多项式 `0x1021`，初始值 `0xFFFF`，不反射，结果不异�
 linux_project/
 ├── README.md
 ├── CMakeLists.txt
-├── include/
-│   └── protocol.hpp
-├── src/
-│   ├── main.cpp
-│   └── protocol.cpp
+├── firmware/             # STM32F401RE 固件
+├── gateway/              # Orange Pi 5B C++ 采集服务和测试
+├── web/                  # 监控后台与页面
+├── config/               # 网关配置
+├── deploy/orangepi5b/    # systemd 与部署文件
 ├── tools/
 │   └── stm32_simulator.py
 └── scripts/
@@ -143,13 +143,14 @@ linux_project/
 ```bash
 cmake -S . -B build
 cmake --build build -j
+ctest --test-dir build --output-on-failure
 ./scripts/demo.sh
 ```
 
 直接读取串口：
 
 ```bash
-./build/edge_collector --input /dev/ttyS4 --baud 115200
+./build/gateway/edge_collector --input /dev/ttyS4 --baud 115200
 ```
 
 当前版本把解析结果打印到终端。下一步会把数据送入内部队列，并加入特征提取和持久化。

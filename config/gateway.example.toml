@@ -1,0 +1,9 @@
+[serial]
+device = "/dev/ttyS4"
+baud = 115200
+
+[storage]
+database = "/var/lib/industrial-edge/telemetry.db"
+
+[device]
+id = "motor-node-01"

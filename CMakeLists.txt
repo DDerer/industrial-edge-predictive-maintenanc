@@ -5,13 +5,6 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-add_executable(edge_collector
-    src/main.cpp
-    src/protocol.cpp
-)
-
-target_include_directories(edge_collector PRIVATE include)
-target_compile_options(edge_collector PRIVATE -Wall -Wextra -Wpedantic -Wconversion)
-
-install(TARGETS edge_collector RUNTIME DESTINATION bin)
+include(CTest)
+add_subdirectory(gateway)
 

@@ -42,6 +42,17 @@ std::vector<Frame> StreamParser::feed(std::span<const std::uint8_t> bytes) {
     while (true) {
         const auto magic = std::search(buffer_.begin(), buffer_.end(),
                                        magic_bytes.begin(), magic_bytes.end());
+        if (magic == buffer_.end()) {
+            const bool keep_prefix = !buffer_.empty() && buffer_.back() == kMagic0;
+            const auto keep_count = keep_prefix ? std::size_t{1} : std::size_t{0};
+            stats_.discarded_bytes += buffer_.size() - keep_count;
+            if (keep_prefix) {
+                buffer_.assign(1, kMagic0);
+            } else {
+                buffer_.clear();
+            }
+            break;
+        }
         if (magic != buffer_.begin()) {
             const auto discarded = static_cast<std::size_t>(std::distance(buffer_.begin(), magic));
             stats_.discarded_bytes += discarded;
